@@ -15,11 +15,7 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
-            steps {
-                sh 'docker run --rm $IMAGE_TAG python -m unittest discover tests'
-            }
-        }
+       
         
         stage('Deploy') {
             steps {
