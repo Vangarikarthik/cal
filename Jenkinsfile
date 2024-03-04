@@ -7,11 +7,7 @@ pipeline {
     }
     
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Vangarikarthik/cal.git'
-            }
-        }
+        
         
         stage('Build') {
             steps {
