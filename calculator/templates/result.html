@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Calculator</title>
+    <title>Calculator Result</title>
 </head>
 <body>
-    <h1>Simple Calculator</h1>
-    <form action="/calculate" method="post">
-        <label for="expression">Enter Expression:</label><br>
-        <input type="text" id="expression" name="expression" required><br>
-        <button type="submit">Calculate</button>
-    </form>
+    <h1>Calculation Result</h1>
+    <p>Expression: {{ expression }}</p>
+    <p>Result: {{ result }}</p>
+    <a href="/">Back to Calculator</a>
 </body>
 </html>
+
 
