@@ -21,8 +21,8 @@ pipeline {
                 sh "docker run -d --name $CONTAINER_NAME -p 5001:5000 $IMAGE_TAG"
                 
                 // Start Ngrok tunnel
-                sh "./ngrok authtoken $NGROK_AUTH_TOKEN"
-                sh "./ngrok http 5001"
+                sh "/snap/bin/ngrok authtoken $NGROK_AUTH_TOKEN" // Adjust path to ngrok based on your system
+                sh "/snap/bin/ngrok http 5001" // Adjust path to ngrok based on your system
             }
         }
     }
