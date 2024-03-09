@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         IMAGE_TAG = "my-flask-app:latest"
-        
+        CONTAINER_NAME="my-flask-container"
     }
     
     stages {
@@ -13,10 +13,13 @@ pipeline {
             }
         }
         
-        stage('Deploy') {
+        stage('run') {
             steps {
-                sh "kubectl apply -f deploy.yaml"
-                sh "kubectl apply -f service.yaml"
+                
+                
+                sh "docker stop $CONTAINER_NAME || true"
+                sh "docker rm $CONTAINER_NAME || true"
+                sh "docker run -d --name $CONTAINER_NAME -p 5001:5000 $IMAGE_TAG"
               
             }
         }
