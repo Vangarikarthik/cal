@@ -16,5 +16,5 @@ spec:
       - name: my-flask-app
         image: my-flask-app:latest
         ports:
-        - containerPort: 5004
+          - containerPort: 5005
 
