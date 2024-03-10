@@ -15,7 +15,7 @@ spec:
       containers:
       - name: my-flask-app
         image: my-flask-app:latest
-        imagePullPolicy: IfNotPresent  # or 'Never' if the image is already present locally
+        imagePullPolicy: Never  # or 'Never' if the image is already present locally
         ports:
           - containerPort: 5005
 
