@@ -35,9 +35,9 @@ pipeline {
  
            steps {
 
-              sh 'kubectl apply -f "deploy.yaml"'
-              sh 'kubectl apply -f "service.yaml"'
-              sh 'minikube service my-first-app-service'
+              sh 'kubectl apply -f "deploy.yaml" --validate=false '
+              sh 'kubectl apply -f "service.yaml" --validate=false '
+              sh 'minikube service my-first-app-service --validate=false '
 
     }
 }
