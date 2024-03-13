@@ -31,6 +31,14 @@ pipeline {
                sh "docker push $IMAGE_TAG" 
 }
 }
+   stage('deploy') {
+ 
+           steps {
+
+              sh "kubectl apply -f "deploy.yaml"
+              sh "kubectl apply -f "service.yaml"
+              sh "minikube service my-first-app-service"
+
     }
 }
 
