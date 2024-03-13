@@ -1,22 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploy
+  name: first-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: my-flask-app
+      app: first-app
   template:
     metadata:
       labels:
-        app: my-flask-app
+        app: first-app
     spec:
       containers:
-      - name: my-flask-app
-        image: my-flask-app:latest
-        imagePullPolicy: Never  # or 'Never' if the image is already present locally
+      - name: first-app-container
+        image: karthikvangari/first-app:latest
         ports:
-          - containerPort: 5005
-
+        - containerPort: 5000
 

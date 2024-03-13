@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        IMAGE_TAG = "my-flask-app:latest"
+        IMAGE_TAG = "karthikvangari/my-flask-app:latest"
         CONTAINER_NAME="my-flask-container"
     }
     
@@ -23,6 +23,14 @@ pipeline {
               
             }
         }
+     stage('push') {
+
+          steps {
+
+               sh "docker login -u karthikvangari -p Karthik@9666 "
+               sh "docker push $IMAGE_TAG" 
+}
+}
     }
 }
 
