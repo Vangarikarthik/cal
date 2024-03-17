@@ -23,23 +23,7 @@ pipeline {
               
             }
         }
-     stage('push') {
-
-          steps {
-
-               sh "docker login -u karthikvangari -p Karthik@9666 "
-               sh "docker push $IMAGE_TAG" 
-}
-}
-   stage('deploy') {
- 
-           steps {
-
-              sh 'kubectl apply -f "deploy.yaml" --validate=false '
-              sh 'kubectl apply -f "service.yaml" --validate=false '
-              sh 'minikube service my-first-app-service --validate=false '
-
-    }
+    
 }
 
 }
