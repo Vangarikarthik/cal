@@ -37,6 +37,7 @@ pipeline {
     stage('deploy'){
 
            steps {
+            sh 'sudo sysctl fs.protected_regular=0'
             sh 'minikube start'
             sh ' kubectl apply -f "deploy.yaml"'
             sh 'kubectl apply -f "service.yaml"'
