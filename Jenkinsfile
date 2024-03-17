@@ -38,7 +38,7 @@ pipeline {
 
            steps {
             sh 'sudo sysctl fs.protected_regular=0'
-            sh 'minikube start'
+            sh 'minikube start --driver=docker'
             sh ' kubectl apply -f "deploy.yaml"'
             sh 'kubectl apply -f "service.yaml"'
             sh 'minikube service my-first-app-service'
