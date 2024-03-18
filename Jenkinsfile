@@ -41,13 +41,15 @@ pipeline {
                     retryCount = 0
                     maxRetries = 5
                     serviceAvailable = false
-
+                    
+                    sh 'minikube start'
+                    sh 'kubectl apply -f "deploy.yaml"'
+                    sh 'kubectl apply -f "service.yaml"'
+                    export BROWSER=/usr/bin/firefox
+                          
+                    
                     while (!serviceAvailable && retryCount < maxRetries) {
                         try {
-                            sh 'minikube start'
-                            sh 'kubectl apply -f "deploy.yaml"'
-                            sh 'kubectl apply -f "service.yaml"'
-                            export BROWSER=/usr/bin/firefox
                             sh 'minikube service my-first-app-service'
                             serviceAvailable = true
                         } catch (Exception e) {
