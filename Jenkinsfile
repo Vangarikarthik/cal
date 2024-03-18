@@ -35,17 +35,33 @@ pipeline {
 
     }
      
-    stage('deploy'){
+            stage('Deploy') {
+            steps {
+                script {
+                    retryCount = 0
+                    maxRetries = 5
+                    serviceAvailable = false
 
-           steps {
-           
-            sh 'minikube start '
-            sh ' kubectl apply -f "deploy.yaml"'
-            sh 'kubectl apply -f "service.yaml"'
-            sh 'minikube service my-first-app-service'
-           }
-}
-}
-}
+                    while (!serviceAvailable && retryCount < maxRetries) {
+                        try {
+                            sh 'minikube start'
+                            sh 'kubectl apply -f "deploy.yaml"'
+                            sh 'kubectl apply -f "service.yaml"'
+                            sh 'minikube service my-first-app-service'
+                            serviceAvailable = true
+                        } catch (Exception e) {
+                            echo "Service not available. Retrying..."
+                            retryCount++
+                            sleep 30 // Adjust the sleep time as needed
+                        }
+                    }
 
+                    if (!serviceAvailable) {
+                        error('Failed to deploy service after multiple retries')
+                    }
+                }
+            }
+        }
+    }
+}
 
