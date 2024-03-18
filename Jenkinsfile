@@ -41,14 +41,26 @@ pipeline {
                     retry(5) {
                         sh 'kubectl apply -f deploy.yaml'
                         sh 'kubectl apply -f service.yaml'
-                        sh 'export BROWSER=/usr/bin/firefox'
-                        def serviceStatus = sh(script: 'minikube service my-first-app-service', returnStdout: true).trim()
+                        
+                        def serviceStatus = sh(script: 'kubectl get svc my-first-app-service', returnStdout: true).trim()
                         if (serviceStatus.contains('pending')) {
                             echo 'Service is still pending. Retrying in 30 seconds...'
                             sleep 30
                             error 'Service not available yet'
                         }
                     }
+                }
+            }
+        }
+        
+        stage('Open URL') {
+            steps {
+                script {
+                    def serviceIP = sh(script: 'minikube service my-first-app-service --url', returnStdout: true).trim()
+                    echo "Service URL: ${serviceIP}"
+                    
+                    // Use curl to make an HTTP request to the service URL
+                    sh "curl -I ${serviceIP}"
                 }
             }
         }
