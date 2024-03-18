@@ -47,6 +47,7 @@ pipeline {
                             sh 'minikube start'
                             sh 'kubectl apply -f "deploy.yaml"'
                             sh 'kubectl apply -f "service.yaml"'
+                            export BROWSER=/usr/bin/firefox
                             sh 'minikube service my-first-app-service'
                             serviceAvailable = true
                         } catch (Exception e) {
