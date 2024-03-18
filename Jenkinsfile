@@ -38,33 +38,22 @@ pipeline {
             stage('Deploy') {
             steps {
                 script {
-                    retryCount = 0
-                    maxRetries = 5
-                    serviceAvailable = false
-                    
-                    sh 'minikube start'
-                    sh 'kubectl apply -f "deploy.yaml"'
-                    sh 'kubectl apply -f "service.yaml"'
-                    export BROWSER=/usr/bin/firefox
-                          
-                    
-                    while (!serviceAvailable && retryCount < maxRetries) {
-                        try {
-                            sh 'minikube service my-first-app-service'
-                            serviceAvailable = true
-                        } catch (Exception e) {
-                            echo "Service not available. Retrying..."
-                            retryCount++
-                            sleep 30 // Adjust the sleep time as needed
+                    retry(5) {
+                        sh 'kubectl apply -f deploy.yaml'
+                        sh 'kubectl apply -f service.yaml'
+                        
+                        def serviceStatus = sh(script: 'kubectl get svc my-first-app-service', returnStdout: true).trim()
+                        if (serviceStatus.contains('pending')) {
+                            echo 'Service is still pending. Retrying in 30 seconds...'
+                            sleep 30
+                            error 'Service not available yet'
                         }
-                    }
-
-                    if (!serviceAvailable) {
-                        error('Failed to deploy service after multiple retries')
                     }
                 }
             }
         }
     }
 }
+    
+
 
