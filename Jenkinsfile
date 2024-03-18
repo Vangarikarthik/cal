@@ -4,7 +4,8 @@ pipeline {
     environment {
         IMAGE_TAG = "karthikvangari/my-flask-app:latest"
         CONTAINER_NAME="my-flask-container"
-    }
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+ }
     
     stages {
         stage('Build') {
@@ -37,8 +38,8 @@ pipeline {
     stage('deploy'){
 
            steps {
-            sh 'sudo sysctl fs.protected_regular=0'
-            sh 'minikube start --driver=podman'
+           
+            sh 'minikube start '
             sh ' kubectl apply -f "deploy.yaml"'
             sh 'kubectl apply -f "service.yaml"'
             sh 'minikube service my-first-app-service'
