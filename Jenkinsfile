@@ -59,8 +59,7 @@ pipeline {
                     def serviceIP = sh(script: 'minikube service my-first-app-service --url', returnStdout: true).trim()
                     echo "Service URL: ${serviceIP}"
                     
-                    // Use curl to make an HTTP request to the service URL
-                    sh "curl -I ${serviceIP}"
+                   sh 'firefox  ${serviceIP}"'
                 }
             }
         }
