@@ -59,7 +59,7 @@ pipeline {
                     def serviceIP = sh(script: 'minikube service my-first-app-service --url', returnStdout: true).trim()
                     echo "Service URL: ${serviceIP}"
                     
-                   sh "firefox  ${serviceIP}"
+                   sh "xdg-open ${serviceIP}"
                 }
             }
         }
